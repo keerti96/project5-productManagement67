@@ -20,9 +20,9 @@ const isValidRequestBody = function (requestBody) {
 
 let priceRegex = /^[(0-9)+.?(0-9)*]+$/
 let styleRegex = /^[a-zA-Z _-]+$/
-let currency = ['INR', 'USD']
+let currency = ['INR']
 let titleRegex = /^[a-zA-Z][a-zA-Z0-9 $!-_#@%&\.]+$/
-//let sizes = ["S", "XS", "M", "X", "L", "XXL", "XL"]
+
 
 
 // <================================================= POST /products ===============================================================>
@@ -379,7 +379,7 @@ const deleteProduct = async function (req, res) {
         let findProduct = await productModel.findById({ _id: productId })
         if (!findProduct) return res.status(404).send({ status: false, message: " product not found" })
 
-        if (findProduct.isDeleted === true) return res.status(404).send({ status: false, message: " already deleted" })
+        if (findProduct.isDeleted === true) return res.status(404).send({ status: false, message: "product not found" })
 
         let DeleteProduct = await productModel.findOneAndUpdate({ _id: productId }, { $set: { isDeleted: true, deletedAt: Date.now() } }, { new: true })
         res.status(200).send({ status: true, message: "deleted", data: DeleteProduct })
